@@ -16,12 +16,14 @@ function cleanUrlSIO (ma) {
     return 'http://' + maStrSplit[2] + ':' + maStrSplit[4]
   }
 
+  const isIpv6 = ma.protos()[0].name === "ip6";
+
   if (wsProto === 'ws') {
-    return 'http://' + maStrSplit[2] + (tcpPort === 80 ? '' : ':' + tcpPort)
+    return 'http://' + (isIpv6 ? `[${maStrSplit[2]}]` : maStrSplit[2]) + (tcpPort === 80 ? '' : ':' + tcpPort)
   }
 
   if (wsProto === 'wss') {
-    return 'https://' + maStrSplit[2] + (tcpPort === 443 ? '' : ':' + tcpPort)
+    return 'https://' + (isIpv6 ? `[${maStrSplit[2]}]` : maStrSplit[2]) + (tcpPort === 443 ? '' : ':' + tcpPort)
   }
 }
 

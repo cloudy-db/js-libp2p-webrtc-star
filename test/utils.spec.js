@@ -16,6 +16,8 @@ describe('utils', () => {
 
   const modernMultiaddrStringDNS = '/dns4/star-signal.cloud.ipfs.team/tcp/443/wss/p2p-webrtc-star/ipfs/QmWxLfixekyv6GAzvDEtXfXjj7gb1z3G8i5aQNHLhw1zA1'
   const modernMultiaddrStringIP = '/ip4/127.0.0.1/tcp/1212/wss/p2p-webrtc-star/ipfs/QmWxLfixekyv6GAzvDEtXfXjj7gb1z3G8i5aQNHLhw1zA1'
+  const modernMultiaddrStringIP61 = '/ip6/::1/wss/p2p-webrtc-star/ipfs/QmWxLfixekyv6GAzvDEtXfXjj7gb1z3G8i5aQNHLhw1zA1'
+  const modernMultiaddrStringIP62 = '/ip6/::1/tcp/1212/wss/p2p-webrtc-star/ipfs/QmWxLfixekyv6GAzvDEtXfXjj7gb1z3G8i5aQNHLhw1zA1'
 
   const modernMultiaddrStringDNS2 = '/dns4/star-signal.cloud.ipfs.team/tcp/9999/wss/p2p-webrtc-star/ipfs/QmWxLfixekyv6GAzvDEtXfXjj7gb1z3G8i5aQNHLhw1zA1'
   const modernMultiaddrStringDNS3 = '/dns4/star-signal.cloud.ipfs.team/tcp/80/ws/p2p-webrtc-star/ipfs/QmWxLfixekyv6GAzvDEtXfXjj7gb1z3G8i5aQNHLhw1zA1'
@@ -31,6 +33,9 @@ describe('utils', () => {
   const modernMultiaddrDNS3 = multiaddr(modernMultiaddrStringDNS3)
   const modernMultiaddrDNS4 = multiaddr(modernMultiaddrStringDNS4)
 
+  const modernMultiaddrIP61 = multiaddr(modernMultiaddrStringIP61)
+  const modernMultiaddrIP62 = multiaddr(modernMultiaddrStringIP62)
+
   const invalidMultiaddrDNS = multiaddr(invalidMultiaddrStringDNS)
   const invalidMultiaddrDNS2 = multiaddr(invalidMultiaddrStringDNS2)
   const invalidMultiaddrDNS3 = multiaddr(invalidMultiaddrStringDNS3)
@@ -40,16 +45,22 @@ describe('utils', () => {
     const newUrlSIOStringDNS2 = cleanUrlSIO(modernMultiaddrDNS2)
     const newUrlSIOStringDNS3 = cleanUrlSIO(modernMultiaddrDNS3)
     const newUrlSIOStringDNS4 = cleanUrlSIO(modernMultiaddrDNS4)
+    // const newUrlSIOStringIP61 = cleanUrlSIO(modernMultiaddrIP61)
+    const newUrlSIOStringIP62 = cleanUrlSIO(modernMultiaddrIP62)
 
     expect(() => cleanUrlSIO(modernMultiaddrDNS)).to.not.throw()
     expect(() => cleanUrlSIO(invalidMultiaddrDNS)).to.throw(Error, 'invalid multiaddr')
     expect(() => cleanUrlSIO(invalidMultiaddrDNS2)).to.throw(Error, 'invalid multiaddr')
     expect(() => cleanUrlSIO(invalidMultiaddrDNS3)).to.throw(Error, 'invalid multiaddr')
+    // expect(() => cleanUrlSIO(modernMultiaddrIP61)).to.not.throw()
+    expect(() => cleanUrlSIO(modernMultiaddrIP62)).to.not.throw()
 
     expect(newUrlSIOStringDNS).to.equal('https://star-signal.cloud.ipfs.team')
     expect(newUrlSIOStringDNS2).to.equal('https://star-signal.cloud.ipfs.team:9999')
     expect(newUrlSIOStringDNS3).to.equal('http://star-signal.cloud.ipfs.team')
     expect(newUrlSIOStringDNS4).to.equal('http://star-signal.cloud.ipfs.team:8080')
+    // expect(newUrlSIOStringIP61).to.equal('https://[::1]')
+    expect(newUrlSIOStringIP62).to.equal('https://[::1]:8080')
   })
 
   it('cleanMultiaddr webrtc-star legacy', () => {
